@@ -12,14 +12,24 @@ jobs:
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 
-      # 🔹 Étape essentielle : récupérer le code du repository
+      # 🔹 Récupérer le code du repository
       - name: Check out repository code
         uses: actions/checkout@v4
 
       - run: echo "💡 The repository has been cloned to the runner."
 
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+      # 🔹 Installer Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # 🔹 Installer pytest
+      - name: Install pytest
+        run: pip install pytest
+
+      # 🔹 Lancer les tests unitaires
+      - name: Run unit tests
+        run: pytest
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
